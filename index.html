@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mary bymary | Flagship Phone Rental</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f9f9f9;color:#111;min-height:100vh}
+.container{max-width:1300px;margin:0 auto;padding:16px}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px;background:#fff;padding:14px 18px;border-radius:12px;border:1px solid #eee}
+.brand{font-size:20px;font-weight:700;color:#111111}
+.brand-sub{font-size:11px;color:#888;margin-top:1px}
+.tpr{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.btn{padding:7px 13px;font-size:12px;border:1px solid #ddd;background:#fff;border-radius:8px;cursor:pointer;color:#333;display:inline-flex;align-items:center;gap:5px;white-space:nowrap;font-family:inherit}
+.btn:hover{background:#f5f5f5}
+.bp{border-color:#111;color:#111}.bg{border-color:#111;color:#111}.bb{border-color:#111;color:#111}
+.save-ind{font-size:11px;color:#888;display:inline-flex;align-items:center;gap:4px}
+.tabs{display:flex;border-bottom:2px solid #eee;margin-bottom:16px;overflow-x:auto;background:#fff;padding:0 18px;border-radius:12px 12px 0 0;border:1px solid #eee;border-bottom:none}
+.tab{padding:12px 16px;font-size:13px;border:none;background:none;cursor:pointer;color:#888;border-bottom:2px solid transparent;white-space:nowrap;font-family:inherit;margin-bottom:-2px}
+.tab.on{color:#111111;border-bottom-color:#111;font-weight:600}
+.page-wrap{background:#fff;border:1px solid #eee;border-radius:0 0 12px 12px;padding:16px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+@media(max-width:600px){.stats{grid-template-columns:repeat(2,1fr)}}
+.stat{background:#f8f8f8;border-radius:10px;padding:12px 14px}
+.sl{font-size:10px;color:#888;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+.sv{font-size:22px;font-weight:700;color:#111}
+.ss{font-size:10px;color:#888;margin-top:2px}
+.alert{background:#fff8e1;border:1px solid #ffe082;border-radius:8px;padding:10px 14px;font-size:12px;color:#555555;margin-bottom:14px;display:none}
+.fbar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.fb{padding:5px 12px;font-size:12px;border:1px solid #ddd;background:#fff;border-radius:20px;cursor:pointer;color:#888;font-family:inherit}
+.fb.on{background:#111;color:#fff;border-color:#111}
+.tbl{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{text-align:left;padding:8px 10px;font-size:10px;font-weight:600;color:#888;border-bottom:2px solid #eee;text-transform:uppercase;letter-spacing:.05em;white-space:nowrap;background:#fafafa}
+td{padding:9px 10px;border-bottom:1px solid #f5f5f5;vertical-align:middle;color:#222}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#fafafa}
+.badge{display:inline-block;padding:3px 9px;border-radius:20px;font-size:10.5px;font-weight:600;white-space:nowrap}
+.bw{background:#f0f0f0;color:#333333}.bg2{background:#efefef;color:#333333}
+.bb2{background:#e8e8e8;color:#333333}.bf{background:#f0f0f0;color:#555555}.bd{background:#f5f5f5;color:#555}
+.ab{padding:4px 9px;font-size:11px;border:1px solid #ddd;background:#fff;border-radius:6px;cursor:pointer;color:#555;white-space:nowrap;font-family:inherit}
+.ab:hover{background:#f5f5f5}
+.ab-g{border-color:#111;color:#111}.ab-b{border-color:#111;color:#111}
+.ab-f{border-color:#555555;color:#555555}.ab-p{border-color:#111;color:#111}
+.mp{color:#111111;font-weight:600}.md{color:#111111;font-weight:600}
+.oid{font-family:monospace;font-size:10px;color:#aaa}
+.dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#111111;margin-right:3px;vertical-align:middle}
+.page{display:none}.page.on{display:block}
+.no-data{text-align:center;padding:2rem;color:#aaa;font-size:13px}
+/* POS */
+.pos-wrap{display:grid;grid-template-columns:1fr 380px;gap:18px}
+@media(max-width:800px){.pos-wrap{grid-template-columns:1fr}}
+.pos-search{width:100%;padding:9px 14px;font-size:13px;border:1px solid #ddd;border-radius:8px;background:#fff;color:#111;margin-bottom:12px;font-family:inherit}
+.pos-card{background:#fff;border:1px solid #eee;border-radius:10px;padding:12px 14px;margin-bottom:8px;cursor:pointer;transition:border-color .15s}
+.pos-card:hover{border-color:#111111}
+.pos-card.sel{border-color:#111111;border-width:2px;background:#fafafa}
+.receipt{background:#fff;border:1px solid #eee;border-radius:12px;padding:16px;position:sticky;top:20px}
+.r-brand{text-align:center;font-size:22px;font-weight:700;color:#111111}
+.r-sub{text-align:center;font-size:11px;color:#aaa;margin-top:2px}
+.r-divider{border:none;border-top:1px dashed #ddd;margin:10px 0}
+.r-row{display:flex;justify-content:space-between;font-size:12px;padding:4px 0}
+.r-row label{color:#888}
+.r-row span{font-weight:500;text-align:right;max-width:60%}
+.r-total{display:flex;justify-content:space-between;font-size:17px;font-weight:700;padding:10px 0;border-top:2px solid #111;margin-top:6px;color:#111111}
+.field{margin-bottom:10px}
+.field label{display:block;font-size:11px;color:#888;margin-bottom:3px;font-weight:500}
+.field input,.field select{width:100%;padding:8px 11px;font-size:13px;border:1px solid #ddd;border-radius:7px;background:#fff;color:#111;font-family:inherit}
+.field input:focus,.field select:focus{outline:none;border-color:#111111}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+/* Upload */
+.upzone{border:2px dashed #ddd;border-radius:12px;padding:2rem 1rem;text-align:center;position:relative;margin-bottom:14px;background:#fafafa;cursor:pointer;transition:all .15s}
+.upzone:hover{border-color:#111111;background:#fafafa}
+.upzone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.log{padding:10px 14px;border-radius:8px;font-size:12px;margin-bottom:12px;display:none}
+.log.ok{background:#efefef;color:#333333}.log.err{background:#ffebee;color:#333333}
+.info-box{background:#f8f8f8;border-radius:10px;padding:14px 16px}
+/* Summary */
+.sc{background:#fff;border:1px solid #eee;border-radius:12px;padding:14px 16px;margin-bottom:12px}
+.sc h4{font-size:10px;color:#aaa;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px;font-weight:600}
+.sr{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #f0f0f0;font-size:13px;color:#333}
+.sr:last-child{border-bottom:none}
+.sum-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:600px){.sum-grid{grid-template-columns:1fr}}
+/* Modal */
+.modal-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;align-items:center;justify-content:center}
+.modal-ov.on{display:flex}
+.modal{background:#fff;border-radius:16px;padding:20px;width:92%;max-width:500px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.2)}
+</style>
+</head>
+<body>
+
+<div class="container">
+<div class="topbar">
+  <div>
+    <div class="brand">Mary bymary</div>
+    <div class="brand-sub">Flagship Phone Rental</div><div class="brand-sub" id="today-lbl"></div>
+  </div>
+  <div class="tpr">
+    <span class="save-ind"><svg width="8" height="8"><circle cx="4" cy="4" r="3" id="sdot" fill="#111111"/></svg><span id="stxt">บันทึกแล้ว</span></span>
+    <button class="btn bp" onclick="document.getElementById('xl-inp').click()">&#11014; นำเข้า Form</button>
+    <input type="file" id="xl-inp" accept=".xlsx,.xls,.csv" style="display:none" onchange="handleFile(this)">
+    <button class="btn bg" onclick="saveData()">&#128190; บันทึก</button>
+    <button class="btn bb" onclick="exportTax()">&#128202; Export ภาษี</button>
+    <button class="btn" onclick="openAdd()">+ เพิ่มรายการ</button>
+  </div>
+</div>
+
+<div class="tabs">
+  <button class="tab on" onclick="showTab('orders',this)">รายการเครื่อง</button>
+  <button class="tab" onclick="showTab('pos',this)">POS / ใบเสร็จ</button>
+  <button class="tab" onclick="showTab('summary',this)">สรุปภาพรวม</button>
+  <button class="tab" onclick="showTab('import',this)">นำเข้าข้อมูล</button>
+</div>
+
+<div class="page-wrap">
+<!-- ORDERS -->
+<div id="page-orders" class="page on">
+  <div class="stats" id="stats"></div>
+  <div class="alert" id="alertbox"></div>
+  <div class="fbar" id="fbar"></div>
+  <div class="tbl">
+    <table>
+      <thead><tr>
+        <th>ออร์เดอร์</th><th>ชื่อ-นามสกุล</th><th>ชื่อเล่น</th><th>เบอร์</th>
+        <th>รุ่นเครื่อง</th><th>Concert / Event</th><th>วันรับ</th><th>วันคืน</th>
+        <th>ล่วงหน้า</th><th>ค้างชำระ</th><th>รวม</th><th>ชำระ</th>
+        <th>สถานะ</th><th>Actions</th>
+      </tr></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- POS -->
+<div id="page-pos" class="page">
+  <div class="pos-wrap">
+    <div>
+      <input class="pos-search" id="pos-q" placeholder="ค้นหาชื่อ, ชื่อเล่น, เบอร์, รุ่น, concert..." oninput="renderPOS()">
+      <div id="pos-list"></div>
+    </div>
+    <div>
+      <div class="receipt">
+        <div class="r-brand">Mary bymary</div>
+        <div class="r-sub">Flagship Phone Rental</div>
+        <div class="r-sub" id="r-no" style="margin-top:4px;color:#bbb">เลือกออร์เดอร์จากรายการ</div>
+        <div id="r-body"></div>
+        <div id="r-inputs" style="display:none;margin-top:12px">
+          <div class="grid2">
+            <div class="field"><label>ล่วงหน้า (฿)</label><input id="r-pre" type="number" oninput="updateR()"></div>
+            <div class="field"><label>ค้างชำระ (฿)</label><input id="r-due" type="number" oninput="updateR()"></div>
+          </div>
+          <div class="field"><label>วิธีชำระเงิน</label>
+            <select id="r-pay" onchange="updateR()">
+              <option>โอน</option><option>เงินสด</option><option>พร้อมเพย์</option><option>บัตร</option>
+            </select>
+          </div>
+          <div class="grid2" style="margin-top:8px">
+            <button class="btn bg" onclick="confirmPay()" style="justify-content:center;padding:10px;width:100%">&#10003; ยืนยันชำระ</button>
+            <button class="btn bp" onclick="doPrint()" style="justify-content:center;padding:10px;width:100%">&#128438; พิมพ์ใบเสร็จ</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SUMMARY -->
+<div id="page-summary" class="page">
+  <div class="stats" id="sum-stats"></div>
+  <div class="sum-grid">
+    <div class="sc"><h4>ยอดเงิน</h4><div id="money-sum"></div></div>
+    <div class="sc"><h4>สถิติสถานะ</h4><div id="status-sum"></div></div>
+  </div>
+  <div class="sc"><h4>รายการวันนี้</h4><div id="today-sum"></div></div>
+</div>
+
+<!-- IMPORT -->
+<div id="page-import" class="page">
+  <div class="upzone" id="dz">
+    <input type="file" accept=".xlsx,.xls,.csv" onchange="handleFile(this)">
+    <div style="font-size:40px">&#128193;</div>
+    <div style="font-size:15px;font-weight:600;color:#333;margin-top:8px">คลิกหรือลากไฟล์ Form Responses มาวาง</div>
+    <div style="font-size:12px;color:#aaa;margin-top:4px">รองรับ .csv จาก Google Sheets Export</div>
+  </div>
+  <div class="log" id="log"></div>
+  <div class="info-box">
+    <div style="font-size:13px;font-weight:600;color:#333;margin-bottom:10px">คอลัมน์ที่อ่านจาก Google Form Responses</div>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:4px;font-size:12px;color:#777">
+      <span>&#8226; ชื่อ – นามสกุล &#8594; ชื่อลูกค้า</span>
+      <span>&#8226; ชื่อเล่น &#8594; Nickname</span>
+      <span>&#8226; หมายเลขบัตร &#8594; ID Card</span>
+      <span>&#8226; เบอร์โทรศัพท์ &#8594; เบอร์</span>
+      <span>&#8226; รุ่นที่เช่า / Device Model &#8594; รุ่นเครื่อง</span>
+      <span>&#8226; วัตถุประสงค์ / Concert &#8594; Event</span>
+      <span>&#8226; วันที่รับอุปกรณ์ &#8594; วันรับ</span>
+      <span>&#8226; วันที่คืนอุปกรณ์ &#8594; วันคืน</span>
+      <span>&#8226; x / Social Media &#8594; Social</span>
+      <span>&#8226; Timestamp &#8594; วันที่กรอก</span>
+    </div>
+    <div style="font-size:11px;color:#aaa;margin-top:10px">&#128161; วิธี Export: Google Sheets &#8594; File &#8594; Download &#8594; CSV (.csv) แล้วนำเข้าที่นี่ค่ะ</div>
+  </div>
+</div>
+</div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-ov" id="modal" onclick="maybeClose(event)">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div style="font-size:16px;font-weight:700;margin-bottom:16px;color:#111">เพิ่มรายการเช่า</div>
+    <div class="field"><label>ชื่อ-นามสกุล *</label><input id="f-name" placeholder="สมหญิง รักดี"></div>
+    <div class="grid2">
+      <div class="field"><label>ชื่อเล่น</label><input id="f-nick" placeholder="มิน"></div>
+      <div class="field"><label>เบอร์โทร</label><input id="f-phone" placeholder="0812345678"></div>
+    </div>
+    <div class="field"><label>รุ่นเครื่อง *</label><input id="f-device" placeholder="iPhone 15 Pro"></div>
+    <div class="field"><label>Concert / Event</label><input id="f-event" placeholder="SEVENTEEN TOUR BKK"></div>
+    <div class="grid2">
+      <div class="field"><label>วันรับเครื่อง</label><input id="f-pu" type="date"></div>
+      <div class="field"><label>วันคืนเครื่อง</label><input id="f-re" type="date"></div>
+    </div>
+    <div class="grid2">
+      <div class="field"><label>ล่วงหน้า (฿)</label><input id="f-pre" type="number" placeholder="0"></div>
+      <div class="field"><label>ค้างชำระ (฿)</label><input id="f-due" type="number" placeholder="0"></div>
+    </div>
+    <div class="field"><label>วิธีชำระ</label>
+      <select id="f-pay"><option>โอน</option><option>เงินสด</option><option>พร้อมเพย์</option><option>บัตร</option></select>
+    </div>
+    <div class="grid2" style="margin-top:8px">
+      <button class="btn" onclick="closeModal()" style="justify-content:center;padding:10px;width:100%">ยกเลิก</button>
+      <button class="btn bg" onclick="saveOrder()" style="justify-content:center;padding:10px;width:100%">บันทึก</button>
+    </div>
+  </div>
+</div>
+
+<script>
+var ST={
+  wait:{l:'รอรับเครื่อง',c:'bw'},
+  got:{l:'รับแล้ว',c:'bg2'},
+  ret:{l:'คืนแล้ว',c:'bb2'},
+  file:{l:'รับไฟล์แล้ว',c:'bf'},
+  done:{l:'เสร็จสิ้น',c:'bd'}
+};
+var SK='bymary_v5';
+var today=new Date().toISOString().split('T')[0];
+var orders=[],filt='all',selId=null;
+
+load();
+document.getElementById('today-lbl').textContent=new Date().toLocaleDateString('th-TH',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+var dz=document.getElementById('dz');
+dz.addEventListener('dragover',function(e){e.preventDefault();dz.style.borderColor='#111111';});
+dz.addEventListener('dragleave',function(){dz.style.borderColor='#ddd';});
+dz.addEventListener('drop',function(e){e.preventDefault();dz.style.borderColor='#ddd';var f=e.dataTransfer.files[0];if(f)handleFile({files:[f]});});
+render();
+  try{var s=localStorage.getItem(SK);if(s){var p=JSON.parse(s);if(p&&p.length){orders=p;return;}}}catch(e){}
+  orders=[
+    {id:'BM001',name:'มินนี่ รักเพลง',nick:'มิน',phone:'0812341001',idcard:'',device:'iPhone 15 Pro',event:'SEVENTEEN TOUR',pickup:'2026-04-20',ret:'2026-04-21',pre:500,due:1500,total:2000,pay:'โอน',social:'@min_fancam',status:'wait',ts:''},
+    {id:'BM002',name:'แพรวา ดาวดี',nick:'แพร',phone:'0898765432',idcard:'',device:'Samsung S24 Ultra',event:'SEVENTEEN TOUR',pickup:'2026-04-20',ret:'2026-04-21',pre:500,due:2000,total:2500,pay:'พร้อมเพย์',social:'',status:'got',ts:''},
+    {id:'BM003',name:'ปลาย สวยงาม',nick:'ปลาย',phone:'0876543210',idcard:'',device:'iPhone 14 Pro Max',event:'BTS CONCERT',pickup:'2026-04-19',ret:'2026-04-20',pre:800,due:1200,total:2000,pay:'โอน',social:'@plai_bts',status:'ret',ts:''},
+    {id:'BM004',name:'มุก ใจดี',nick:'มุก',phone:'0856781234',idcard:'',device:'iPhone 15',event:'AESPA FANMEET',pickup:'2026-04-18',ret:'2026-04-19',pre:400,due:600,total:1000,pay:'โอน',social:'',status:'file',ts:''},
+    {id:'BM005',name:'เฟิร์น สะอาด',nick:'เฟิร์น',phone:'0823456789',idcard:'',device:'Pixel 8 Pro',event:'BTS CONCERT',pickup:'2026-04-22',ret:'2026-04-23',pre:600,due:900,total:1500,pay:'โอน',social:'',status:'wait',ts:''},
+  ];
+}
+function load(){
+  try{localStorage.setItem(SK,JSON.stringify(orders));setSave(true,'บันทึกแล้ว');}
+  catch(e){setSave(false,'บันทึกไม่สำเร็จ');}
+}
+function dirty(){setSave(false,'มีการเปลี่ยนแปลง');}
+function setSave(ok,t){
+  document.getElementById('stxt').textContent=t;
+  document.getElementById('sdot').setAttribute('fill',ok?'#111111':'#111111');
+}
+
+document.getElementById('today-lbl').textContent=new Date().toLocaleDateString('th-TH',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+
+function fB(n){return Number(n||0).toLocaleString('th-TH')+'฿';}
+function fD(d){
+  if(!d||d==='-')return'-';
+  if(d.indexOf('/')>-1)return d;
+  var p=d.split('-');
+  return p.length===3?p[2]+'/'+p[1]+'/'+p[0]:d;
+}
+function pDate(s){
+  if(!s)return'';s=String(s).trim();
+  if(/^\d{4}-\d{2}-\d{2}/.test(s))return s.substring(0,10);
+  if(/^\d{1,2}[\/\-]\d{1,2}[\/\-]\d{4}$/.test(s)){
+    var p=s.split(/[\/\-]/);
+    return p[2]+'-'+p[1].padStart(2,'0')+'-'+p[0].padStart(2,'0');
+  }
+  return s;
+}
+
+function renderStats(){
+  var tP=orders.filter(function(o){return o.pickup===today;}).length;
+  var tR=orders.filter(function(o){return o.ret===today;}).length;
+  var pre=orders.reduce(function(a,o){return a+Number(o.pre||0);},0);
+  var due=orders.reduce(function(a,o){return a+Number(o.due||0);},0);
+  document.getElementById('stats').innerHTML=
+    '<div class="stat"><div class="sl">ออร์เดอร์ทั้งหมด</div><div class="sv">'+orders.length+'</div><div class="ss">รายการ</div></div>'+
+    '<div class="stat"><div class="sl">รับ/คืนวันนี้</div><div class="sv" style="color:#555555">'+tP+'/'+tR+'</div><div class="ss">เครื่อง</div></div>'+
+    '<div class="stat"><div class="sl">รับล่วงหน้าแล้ว</div><div class="sv mp" style="font-size:16px">'+fB(pre)+'</div></div>'+
+    '<div class="stat"><div class="sl">ยังค้างชำระ</div><div class="sv md" style="font-size:16px">'+fB(due)+'</div></div>';
+  var tp2=orders.filter(function(o){return o.pickup===today&&o.status==='wait';});
+  var tr2=orders.filter(function(o){return o.ret===today&&(o.status==='got'||o.status==='ret');});
+  var msgs=[];
+  if(tp2.length)msgs.push('⚡ นัดรับเครื่อง '+tp2.length+' ราย: '+tp2.map(function(o){return o.nick||o.name.split(' ')[0];}).join(', '));
+  if(tr2.length)msgs.push('⚡ นัดคืน '+tr2.length+' ราย: '+tr2.map(function(o){return o.nick||o.name.split(' ')[0];}).join(', '));
+  var ab=document.getElementById('alertbox');
+  if(msgs.length){ab.innerHTML=msgs.join(' · ');ab.style.display='block';}
+  else ab.style.display='none';
+}
+
+function renderFilters(){
+  var cnt={all:orders.length};
+  Object.keys(ST).forEach(function(k){cnt[k]=orders.filter(function(o){return o.status===k;}).length;});
+  var lbls={all:'ทั้งหมด'};
+  Object.keys(ST).forEach(function(k){lbls[k]=ST[k].l;});
+  var out='';
+  Object.keys(lbls).forEach(function(k){
+    out+='<button class="fb'+(filt===k?' on':'')+'" onclick="setFilt(\''+k+'\')">'+lbls[k]+' ('+cnt[k]+')</button>';
+  });
+  document.getElementById('fbar').innerHTML=out;
+}
+function setFilt(f){filt=f;renderFilters();renderTable();}
+
+function renderTable(){
+  var rows=filt==='all'?orders:orders.filter(function(o){return o.status===filt;});
+  var tb=document.getElementById('tbody');
+  if(!rows.length){tb.innerHTML='<tr><td colspan="14" class="no-data">ไม่มีรายการ</td></tr>';return;}
+  tb.innerHTML=rows.map(function(o){
+    var isT=o.pickup===today||o.ret===today;
+    var btns='';
+    if(o.status==='wait') btns+='<button class="ab ab-g" onclick="setS(\''+o.id+'\',\'got\')">✓ รับแล้ว</button> ';
+    if(o.status==='got')  btns+='<button class="ab ab-b" onclick="setS(\''+o.id+'\',\'ret\')">↩ คืนแล้ว</button> ';
+    if(o.status==='ret')  btns+='<button class="ab ab-f" onclick="setS(\''+o.id+'\',\'file\')">รับไฟล์แล้ว</button> ';
+    if(o.status==='file') btns+='<button class="ab" style="border-color:#555;color:#555" onclick="setS(\''+o.id+'\',\'done\')">เสร็จสิ้น</button> ';
+    btns+='<button class="ab ab-p" onclick="goPOS(\''+o.id+'\')">🧾</button>';
+    if(o.status!=='wait') btns+=' <button class="ab" style="color:#bbb" onclick="setS(\''+o.id+'\',\'wait\')">↩</button>';
+    return '<tr>'+
+      '<td><span class="oid">'+o.id+'</span></td>'+
+      '<td style="font-weight:600">'+(isT?'<span class="dot"></span>':'')+o.name+'</td>'+
+      '<td style="color:#888">'+(o.nick||'-')+'</td>'+
+      '<td style="font-size:11px;color:#aaa">'+(o.phone||'-')+'</td>'+
+      '<td>'+o.device+'</td>'+
+      '<td><span style="font-size:11px;background:#f5f5f5;padding:2px 8px;border-radius:10px;white-space:nowrap">'+(o.event||'-')+'</span></td>'+
+      '<td style="font-size:11px;white-space:nowrap">'+fD(o.pickup)+'</td>'+
+      '<td style="font-size:11px;white-space:nowrap">'+fD(o.ret)+'</td>'+
+      '<td class="mp">'+fB(o.pre)+'</td>'+
+      '<td class="md">'+fB(o.due)+'</td>'+
+      '<td style="font-weight:600">'+fB(o.total)+'</td>'+
+      '<td style="font-size:11px;color:#888">'+(o.pay||'-')+'</td>'+
+      '<td><span class="badge '+ST[o.status].c+'">'+ST[o.status].l+'</span></td>'+
+      '<td><div style="display:flex;gap:3px;flex-wrap:nowrap">'+btns+'</div></td>'+
+      '</tr>';
+  }).join('');
+}
+function setS(id,s){var o=orders.find(function(x){return x.id===id;});if(o){o.status=s;dirty();render();}}
+
+function goPOS(id){selId=id;showTab('pos',document.querySelectorAll('.tab')[1]);renderPOS();selectPOS(id);}
+
+function renderPOS(){
+  var q=(document.getElementById('pos-q').value||'').toLowerCase();
+  var f=orders.filter(function(o){
+    if(!q)return true;
+    return[o.name,o.nick,o.phone,o.device,o.event,o.id].some(function(v){
+      return v&&String(v).toLowerCase().indexOf(q)>-1;
+    });
+  });
+  document.getElementById('pos-list').innerHTML=f.map(function(o){
+    return '<div class="pos-card'+(selId===o.id?' sel':'')+'" onclick="selectPOS(\''+o.id+'\')">'+
+      '<div style="display:flex;justify-content:space-between;align-items:flex-start">'+
+      '<div style="font-weight:600">'+o.name+(o.nick?' ('+o.nick+')':'')+'</div>'+
+      '<span class="badge '+ST[o.status].c+'" style="font-size:10px">'+ST[o.status].l+'</span></div>'+
+      '<div style="font-size:12px;color:#888;margin-top:3px">'+o.device+(o.event?' · '+o.event:'')+'</div>'+
+      '<div style="display:flex;justify-content:space-between;font-size:12px;margin-top:4px">'+
+      '<span class="oid">'+o.id+'</span><span style="font-weight:700">'+fB(o.total)+'</span></div></div>';
+  }).join('')||'<div class="no-data">ไม่พบรายการ</div>';
+}
+
+function selectPOS(id){
+  selId=id;
+  var o=orders.find(function(x){return x.id===id;});if(!o)return;
+  document.getElementById('r-pre').value=o.pre||0;
+  document.getElementById('r-due').value=o.due||0;
+  document.getElementById('r-pay').value=o.pay||'โอน';
+  renderPOS();buildR(o);
+  document.getElementById('r-inputs').style.display='block';
+}
+
+function buildR(o){
+  var pre=Number(document.getElementById('r-pre').value)||0;
+  var due=Number(document.getElementById('r-due').value)||0;
+  var pay=document.getElementById('r-pay').value||'โอน';
+  document.getElementById('r-no').textContent='เลขที่ '+o.id+' · '+new Date().toLocaleDateString('th-TH');
+  document.getElementById('r-body').innerHTML=
+    '<hr class="r-divider">'+
+    '<div class="r-row"><label>ชื่อผู้เช่า</label><span>'+o.name+(o.nick?' ('+o.nick+')':'')+'</span></div>'+
+    (o.phone&&o.phone!=='-'?'<div class="r-row"><label>เบอร์โทร</label><span>'+o.phone+'</span></div>':'')+
+    (o.idcard?'<div class="r-row"><label>หมายเลขบัตร</label><span>'+o.idcard+'</span></div>':'')+
+    (o.social?'<div class="r-row"><label>Social</label><span>'+o.social+'</span></div>':'')+
+    '<hr class="r-divider">'+
+    '<div class="r-row"><label>รุ่นเครื่อง</label><span>'+o.device+'</span></div>'+
+    (o.event?'<div class="r-row"><label>Concert / Event</label><span>'+o.event+'</span></div>':'')+
+    '<div class="r-row"><label>วันรับเครื่อง</label><span>'+fD(o.pickup)+'</span></div>'+
+    '<div class="r-row"><label>วันคืนเครื่อง</label><span>'+fD(o.ret)+'</span></div>'+
+    '<hr class="r-divider">'+
+    '<div class="r-row"><label>ยอดล่วงหน้า</label><span style="color:#111111">'+fB(pre)+'</span></div>'+
+    '<div class="r-row"><label>ยอดค้างชำระ</label><span style="color:#111111">'+fB(due)+'</span></div>'+
+    '<div class="r-row"><label>วิธีชำระ</label><span>'+pay+'</span></div>'+
+    '<div class="r-total"><span>รวมทั้งสิ้น</span><span>'+fB(pre+due)+'</span></div>'+
+    '<div style="text-align:center;font-size:10px;color:#aaa;margin-top:10px;padding-top:10px;border-top:1px dashed #eee">ขอบคุณที่ใช้บริการ Mary bymary 💕<br>x: @mary_bymary | TikTok: @Mary_bymary<br>Line OA: marybymary | 📞 0990494822</div>';
+}
+function updateR(){var o=orders.find(function(x){return x.id===selId;});if(o)buildR(o);}
+
+function confirmPay(){
+  var o=orders.find(function(x){return x.id===selId;});if(!o)return;
+  o.pre=Number(document.getElementById('r-pre').value)||0;
+  o.due=Number(document.getElementById('r-due').value)||0;
+  o.total=o.pre+o.due;
+  o.pay=document.getElementById('r-pay').value;
+  if(o.status==='wait')o.status='got';
+  dirty();render();renderPOS();buildR(o);
+}
+
+function doPrint(){
+  var o=orders.find(function(x){return x.id===selId;});if(!o)return;
+  var pre=Number(document.getElementById('r-pre').value)||0;
+  var due=Number(document.getElementById('r-due').value)||0;
+  var pay=document.getElementById('r-pay').value;
+  var html='<!DOCTYPE html><html><head><meta charset="utf-8"><title>ใบเสร็จ '+o.id+'</title>'+
+    '<style>body{font-family:system-ui,sans-serif;max-width:320px;margin:20px auto;padding:16px}'+
+    '.brand{text-align:center;font-size:22px;font-weight:700;color:#111111}'+
+    '.sub{text-align:center;font-size:11px;color:#aaa;margin:2px 0}'+
+    '.row{display:flex;justify-content:space-between;font-size:12px;padding:4px 0;border-bottom:1px solid #f5f5f5}'+
+    '.row label{color:#888}.row span{font-weight:500;text-align:right}'+
+    'hr{border:none;border-top:1px dashed #ddd;margin:8px 0}'+
+    '.total{display:flex;justify-content:space-between;font-size:16px;font-weight:700;color:#111111;padding:10px 0;border-top:2px solid #111;margin-top:4px}'+
+    '.foot{text-align:center;font-size:10px;color:#aaa;margin-top:14px;padding-top:10px;border-top:1px dashed #eee}'+
+    '@media print{body{margin:0}button{display:none}}</style></head><body>'+
+    '<div class="brand">Mary bymary</div>'+
+    '<div class="sub">Phone Rental for Concert &amp; Events</div>'+
+    '<div class="sub">เลขที่ '+o.id+' · '+new Date().toLocaleDateString('th-TH',{year:'numeric',month:'long',day:'numeric'})+'</div>'+
+    '<hr>'+
+    '<div class="row"><label>ชื่อผู้เช่า</label><span>'+o.name+(o.nick?' ('+o.nick+')':'')+'</span></div>'+
+    (o.phone&&o.phone!=='-'?'<div class="row"><label>เบอร์โทร</label><span>'+o.phone+'</span></div>':'')+
+    (o.idcard?'<div class="row"><label>หมายเลขบัตร</label><span>'+o.idcard+'</span></div>':'')+
+    (o.social?'<div class="row"><label>Social</label><span>'+o.social+'</span></div>':'')+
+    '<hr>'+
+    '<div class="row"><label>รุ่นเครื่อง</label><span>'+o.device+'</span></div>'+
+    (o.event?'<div class="row"><label>Concert/Event</label><span>'+o.event+'</span></div>':'')+
+    '<div class="row"><label>วันรับ</label><span>'+fD(o.pickup)+'</span></div>'+
+    '<div class="row"><label>วันคืน</label><span>'+fD(o.ret)+'</span></div>'+
+    '<hr>'+
+    '<div class="row"><label>ล่วงหน้า</label><span style="color:#111111">'+fB(pre)+'</span></div>'+
+    '<div class="row"><label>ค้างชำระ</label><span style="color:#111111">'+fB(due)+'</span></div>'+
+    '<div class="row"><label>วิธีชำระ</label><span>'+pay+'</span></div>'+
+    '<div class="total"><span>รวมทั้งสิ้น</span><span>'+fB(pre+due)+'</span></div>'+
+    '<div class="foot">ขอบคุณที่ใช้บริการ Mary bymary 💕<br>x: @mary_bymary | TikTok: @Mary_bymary<br>Line OA: marybymary | 📞 0990494822</div>'+
+    '<br><button onclick="window.print()" style="width:100%;padding:10px;background:#111;color:white;border:none;border-radius:8px;font-size:14px;cursor:pointer;font-family:inherit">🖨 พิมพ์ใบเสร็จ</button>'+
+    '</body></html>';
+  var w=window.open('','_blank');
+  if(w){w.document.write(html);w.document.close();}
+  else alert('กรุณาอนุญาต Popup เพื่อพิมพ์ใบเสร็จ');
+}
+
+function renderSummary(){
+  var pre=orders.reduce(function(a,o){return a+Number(o.pre||0);},0);
+  var due=orders.reduce(function(a,o){return a+Number(o.due||0);},0);
+  var tot=orders.reduce(function(a,o){return a+Number(o.total||0);},0);
+  document.getElementById('sum-stats').innerHTML=
+    '<div class="stat"><div class="sl">เครื่องทั้งหมด</div><div class="sv">'+orders.length+'</div></div>'+
+    '<div class="stat"><div class="sl">รับ/คืนวันนี้</div><div class="sv" style="color:#555555">'+orders.filter(function(o){return o.pickup===today;}).length+'/'+orders.filter(function(o){return o.ret===today;}).length+'</div></div>'+
+    '<div class="stat"><div class="sl">รับล่วงหน้า</div><div class="sv mp" style="font-size:15px">'+fB(pre)+'</div></div>'+
+    '<div class="stat"><div class="sl">ค้างชำระ</div><div class="sv md" style="font-size:15px">'+fB(due)+'</div></div>';
+  document.getElementById('money-sum').innerHTML=
+    '<div class="sr"><span>รับล่วงหน้าแล้ว</span><span class="mp">'+fB(pre)+'</span></div>'+
+    '<div class="sr"><span>ยังค้างชำระ</span><span class="md">'+fB(due)+'</span></div>'+
+    '<div class="sr"><span>รายรับรวมทั้งหมด</span><span style="font-weight:700">'+fB(tot)+'</span></div>'+
+    '<div class="sr"><span style="color:#aaa;font-size:11px">% เก็บแล้ว</span><span>'+(tot?Math.round(pre/tot*100):0)+'%</span></div>';
+  document.getElementById('status-sum').innerHTML=Object.keys(ST).map(function(k){
+    var c=orders.filter(function(o){return o.status===k;}).length;
+    var p=orders.length?Math.round(c/orders.length*100):0;
+    return '<div class="sr"><span class="badge '+ST[k].c+'" style="font-size:10px">'+ST[k].l+'</span>'+
+      '<span style="display:flex;align-items:center;gap:8px">'+
+      '<span style="width:70px;height:4px;background:#f0f0f0;border-radius:4px;overflow:hidden;display:inline-block"><span style="width:'+p+'%;height:100%;background:#888;display:block"></span></span>'+
+      '<span style="font-size:12px;min-width:50px;text-align:right">'+c+' ('+p+'%)</span></span></div>';
+  }).join('');
+  var todays=orders.filter(function(o){return o.pickup===today||o.ret===today;});
+  var td=document.getElementById('today-sum');
+  if(!todays.length){td.innerHTML='<div class="no-data">ไม่มีรายการวันนี้</div>';return;}
+  td.innerHTML=todays.map(function(o){
+    return '<div class="sr">'+
+      '<span style="font-weight:600">'+(o.nick||o.name.split(' ')[0])+' <span style="font-size:11px;color:#aaa;font-weight:400">— '+o.device+'</span></span>'+
+      '<span style="display:flex;gap:5px;align-items:center">'+
+      (o.pickup===today?'<span style="font-size:10px;background:#f0f0f0;color:#555555;padding:2px 7px;border-radius:10px">รับ</span>':'')+
+      (o.ret===today?'<span style="font-size:10px;background:#e8e8e8;color:#333333;padding:2px 7px;border-radius:10px">คืน</span>':'')+
+      '<span class="md" style="font-weight:700">'+fB(o.due)+'</span></span></div>';
+  }).join('');
+}
+
+var FC={
+  name:['ชื่อ – นามสกุล','ชื่อ-นามสกุล','full name','ชื่อ นามสกุล','name'],
+  nick:['ชื่อเล่น','nickname','nick'],
+  idcard:['หมายเลขบัตร','id card','บัตรประชาชน','passport'],
+  phone:['เบอร์โทรศัพท์','เบอร์โทร','phone','tel','mobile'],
+  device:['รุ่นที่เช่า','device model','รุ่นเครื่อง','device'],
+  event:['วัตถุประสงค์','concert','event','งาน'],
+  pickup:['วันที่รับอุปกรณ์','pick-up date','วันรับ','pickup'],
+  ret:['วันที่คืนอุปกรณ์','return date','วันคืน'],
+  social:['x / social media','social media','twitter','social','ig'],
+  ts:['timestamp','เวลาที่ตอบ'],
+};
+function findC(row,aliases){
+  var keys=Object.keys(row);
+  for(var i=0;i<aliases.length;i++){
+    var a=aliases[i].toLowerCase();
+    var f=keys.find(function(k){return k.toLowerCase().indexOf(a)>-1||a.indexOf(k.toLowerCase().substring(0,6))>-1;});
+    if(f)return f;
+  }return null;
+}
+function handleFile(inp){
+  var file=inp.files[0];if(!file)return;
+  var reader=new FileReader();
+  reader.onload=function(e){parseCSV(e.target.result);};
+  reader.readAsText(file,'UTF-8');
+}
+function parseCSV(text){
+  try{
+    if(text.charCodeAt(0)===0xFEFF)text=text.slice(1);
+    var lines=text.split(/\r?\n/).filter(function(l){return l.trim();});
+    if(lines.length<2){setLog('ไฟล์ว่างเปล่า','err');return;}
+    var headers=splitLine(lines[0]).map(function(h){return h.replace(/^"|"$/g,'').trim();});
+    var rows=lines.slice(1).map(function(l){
+      var vals=splitLine(l).map(function(v){return v.replace(/^"|"$/g,'').trim();});
+      var obj={};
+      headers.forEach(function(h,i){obj[h]=vals[i]||'';});
+      return obj;
+    });
+    importRows(rows);
+  }catch(e){setLog('Error: '+e.message,'err');}
+}
+function splitLine(line){
+  var result=[],cur='',inQ=false;
+  for(var i=0;i<line.length;i++){
+    var c=line[i];
+    if(c==='"'){if(inQ&&line[i+1]==='"'){cur+='"';i++;}else inQ=!inQ;}
+    else if(c===','&&!inQ){result.push(cur);cur='';}
+    else cur+=c;
+  }
+  result.push(cur);return result;
+}
+function importRows(rows){
+  if(!rows.length){setLog('ไม่พบข้อมูล','err');return;}
+  var added=0,skip=0;
+  rows.forEach(function(row){
+    var g=function(a){var c=findC(row,a);return c?String(row[c]).trim():'';};
+    var name=g(FC.name);if(!name){skip++;return;}
+    var pre=Number(g(['ยอดล่วงหน้า','ล่วงหน้า','deposit']))||0;
+    var due=Number(g(['ค้างชำระ','due','balance']))||0;
+    orders.push({
+      id:'BM'+String(orders.length+1).padStart(3,'0'),
+      name:name,nick:g(FC.nick),idcard:g(FC.idcard),
+      phone:g(FC.phone),device:g(FC.device)||'(ระบุที่ POS)',
+      event:g(FC.event),pickup:pDate(g(FC.pickup)),ret:pDate(g(FC.ret)),
+      pre:pre,due:due,total:pre+due,
+      pay:g(['วิธีชำระ','payment'])||'โอน',
+      social:g(FC.social),status:'wait',ts:g(FC.ts),
+    });
+    added++;
+  });
+  setLog('✓ นำเข้าสำเร็จ '+added+' ราย'+(skip?' (ข้าม '+skip+' แถวที่ไม่มีชื่อ)':''),'ok');
+  dirty();render();
+  showTab('orders',document.querySelector('.tab'));
+}
+function setLog(msg,t){var el=document.getElementById('log');el.className='log '+t;el.textContent=msg;el.style.display='block';}
+
+function exportTax(){
+  var rows=[['ลำดับ','ออร์เดอร์','วันที่','ชื่อ-นามสกุล','ชื่อเล่น','เบอร์','รายการ','Concert/Event','วันรับ','วันคืน','ล่วงหน้า','ค้างชำระ','ยอดรวม','วิธีชำระ','สถานะ','VAT 7%','ก่อน VAT']];
+  orders.forEach(function(o,i){
+    var t=Number(o.total||0);
+    rows.push([i+1,o.id,fD(o.pickup),o.name,o.nick||'',o.phone||'',o.device,o.event||'',fD(o.pickup),fD(o.ret),Number(o.pre||0),Number(o.due||0),t,o.pay||'',ST[o.status].l,Math.round(t*7/107*100)/100,Math.round(t*100/107*100)/100]);
+  });
+  var tot=orders.reduce(function(a,o){return a+Number(o.total||0);},0);
+  rows.push(['รวม','','','','','','','','','',orders.reduce(function(a,o){return a+Number(o.pre||0);},0),orders.reduce(function(a,o){return a+Number(o.due||0);},0),tot,'','',Math.round(tot*7/107*100)/100,Math.round(tot*100/107*100)/100]);
+  var csv=rows.map(function(r){return r.map(function(v){return'"'+String(v).replace(/"/g,'""')+'"';}).join(',');}).join('\n');
+  var blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'});
+  var url=URL.createObjectURL(blob);
+  var a=document.createElement('a');a.href=url;a.download='BYMARY_Tax_'+new Date().getFullYear()+'.csv';
+  document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
+}
+
+function showTab(p,btn){
+  document.querySelectorAll('.page').forEach(function(x){x.classList.remove('on');});
+  document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('on');});
+  document.getElementById('page-'+p).classList.add('on');
+  if(btn)btn.classList.add('on');
+  if(p==='summary')renderSummary();
+  if(p==='pos'){renderPOS();if(selId)selectPOS(selId);}
+}
+function openAdd(){
+  document.getElementById('f-pu').value=today;
+  document.getElementById('f-re').value=today;
+  document.getElementById('modal').classList.add('on');
+}
+function closeModal(){document.getElementById('modal').classList.remove('on');}
+function maybeClose(e){if(e.target===document.getElementById('modal'))closeModal();}
+function saveOrder(){
+  var name=document.getElementById('f-name').value.trim();
+  var device=document.getElementById('f-device').value.trim();
+  if(!name||!device){alert('กรุณากรอกชื่อและรุ่นเครื่อง');return;}
+  var pre=Number(document.getElementById('f-pre').value)||0;
+  var due=Number(document.getElementById('f-due').value)||0;
+  orders.push({
+    id:'BM'+String(orders.length+1).padStart(3,'0'),
+    name:name,nick:document.getElementById('f-nick').value.trim(),
+    idcard:'',phone:document.getElementById('f-phone').value.trim()||'-',
+    device:device,event:document.getElementById('f-event').value.trim()||'-',
+    pickup:document.getElementById('f-pu').value||today,
+    ret:document.getElementById('f-re').value||today,
+    pre:pre,due:due,total:pre+due,
+    pay:document.getElementById('f-pay').value,
+    social:'',status:'wait',ts:'',
+  });
+  ['f-name','f-nick','f-phone','f-device','f-event','f-pre','f-due'].forEach(function(id){
+    document.getElementById(id).value='';
+  });
+  closeModal();dirty();render();
+}
+
+var dz=document.getElementById('dz');
+dz.addEventListener('dragover',function(e){e.preventDefault();dz.style.borderColor='#111111';});
+dz.addEventListener('dragleave',function(){dz.style.borderColor='#ddd';});
+dz.addEventListener('drop',function(e){
+  e.preventDefault();dz.style.borderColor='#ddd';
+  var f=e.dataTransfer.files[0];if(f)handleFile({files:[f]});
+});
+
+function render(){renderStats();renderFilters();renderTable();}
+render();
+
+</script>
+</body>
+</html>
